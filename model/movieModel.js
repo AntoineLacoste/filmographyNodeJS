@@ -6,10 +6,9 @@ var movieSchema = new Schema({
     realisator: String,
     poster: String,
     releaseDate: Date,
-    addDate: Date,
+    addDate: { type: Date, default: Date.now },
     summary: String,
-    reviwes: [{type: Schema.Types.ObjectId, ref: 'Review'}]
-
+    reviews: [{type: Schema.Types.ObjectId, ref: 'Review'}]
 });
 
 module.exports = mongoose.model('Movie', movieSchema);

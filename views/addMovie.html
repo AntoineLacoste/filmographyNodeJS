@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/public/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/public/css/main.css">
+    <title>9Gag Like</title>
+</head>
+<body>
+
+<% include menu.html %>
+
+<div class="container">
+    <% if(typeof(error) != "undefined") { %>
+    <div class="alert alert-danger">
+        <p> <%= error %></p>
+    </div>
+    <% } %>
+    <form method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="title">Titre</label>
+            <input type="text" class="form-control" id="title" name="title" placeholder="Titre">
+        </div>
+        <div class="form-group">
+            <label for="realisator">Realisator</label>
+            <input type="text" class="form-control" id="realisator" name="realisator" placeholder="realisator">
+        </div>
+        <div class="form-group">
+            <label for="poster">Poster</label>
+            <input type="file" name="poster" id="poster">
+        </div>
+        <div class="form-group">
+            <label for="releaseDate">Release date</label>
+            <input type="date" name="releaseDate" id="releaseDate">
+        </div>
+        <div class="form-group">
+            <label for="releaseDate">Release date</label>
+            <textarea name="summary" id="summary"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Envoyer</button>
+    </form>
+</div>
+
+</body>
+</html>

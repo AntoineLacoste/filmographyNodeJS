@@ -29,6 +29,7 @@ var upload = multer({
 }).single('picture');
 
 router.get('/', function(req, res) {
+    res.render('addMovie.html', {});
 });
 
 router.get('/popular', function(req, res) {
