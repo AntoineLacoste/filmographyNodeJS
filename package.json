@@ -9,6 +9,7 @@
   "author": "me",
   "license": "ISC",
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.15.2",
     "bootstrap": "^3.3.7",
     "ejs": "^2.5.5",

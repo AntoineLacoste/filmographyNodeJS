@@ -3,7 +3,10 @@ var fs         = require('fs');
 var multer     = require('multer');
 var crypto     = require('crypto');
 var mime       = require('mime');
-var db         = require('../config/db');
+var db = require('../config/db');
+var bodyParser = require('body-parser');
+var User = require('../model/userModel');
+var bcrypt = require('bcrypt-nodejs');
 var movieModel = require('../model/movieModel');
 
 var storage    = multer.diskStorage({
@@ -31,6 +34,22 @@ var upload = multer({
 
 router.get('/login', function (req, res) {
     res.render('login.html', {});
+});
+
+var parser = bodyParser.urlencoded({ extended: false });
+
+router.post('/login', parser, function (req, res) {
+    var login = req.body.login;
+
+    var salt = bcrypt.genSaltSync(10);
+    var hash = bcrypt.hashSync(req.body.password, salt);
+
+    var u = User({
+        login: login,
+        password: hash
+    }).save(function (err, comment) {
+        res.redirect('/');
+    });
 });
 
 router.get('/config', function(req, res) {
