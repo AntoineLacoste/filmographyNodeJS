@@ -3,10 +3,10 @@ var fs         = require('fs');
 var multer     = require('multer');
 var crypto     = require('crypto');
 var mime       = require('mime');
-var db = require('../config/db');
+var db         = require('../config/db');
 var bodyParser = require('body-parser');
-var User = require('../model/userModel');
-var bcrypt = require('bcrypt-nodejs');
+var User       = require('../model/userModel');
+var bcrypt     = require('bcrypt-nodejs');
 var movieModel = require('../model/movieModel');
 
 var storage    = multer.diskStorage({

@@ -12,14 +12,20 @@
 
 <div class="container">
   <div class="thumbnail">
-    <img src="<%= post.picture %>" alt="...">
+    <img src="<%= movie.poster %>" alt="...">
     <div class="caption">
-      <h3><%= post.title %></h3>
-      <p><%= post.author %></p>
+      <h3><%= movie.title %></h3>
+      <p><%= movie.author %></p>
       <div id="comments">
-        <% post.comments.forEach(function(comment) { %>
-          <h2><%= comment.pseudo %></h2>
-          <p><%= comment.text %></p>
+        <% movie.reviews.forEach(function(review) { %>
+        <div class="thumbnail">
+          <label>Pseudo</label>
+          <h2><%= review.pseudo %></h2>
+          <label>Commentary</label>
+          <p><%= review.text %></p>
+          <label>Note</label>
+          <p><%= review.note %></p>
+        </div>
         <% }) %>
       </div>
       <form method="post" class="horizontal-form">
@@ -30,6 +36,10 @@
         <div class="form-group">
           <label>Commentary</label>
           <textarea name="comment" class="form-control"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Note</label>
+          <input type="number" name="note" class="form-control" min="1" max="10">
         </div>
         <div class="form-group">
           <input type="submit" class="btn-primary btn" value="Submit"/>
