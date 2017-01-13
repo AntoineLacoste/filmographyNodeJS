@@ -82,11 +82,12 @@ router.get('/config', function(req, res) {
 });
 
 /**************** Add movie routing******/
-router.get('/addMovie', checkLogin, function(req, res) {
+//TODO add middleware
+router.get('/addMovie', function(req, res) {//, checkLogin, function(req, res) {
     res.render('addMovie.html', {});
 });
 
-router.post('/addMovie', function (req, res) {
+router.post('/addMovie', function(req, res) {//, checkLogin, function (req, res) {
     upload(req, res, function (err) {
         if(err){
             return res.render('addMovie.html', {error: err});
