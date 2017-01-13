@@ -4,6 +4,7 @@ var multer     = require('multer');
 var crypto     = require('crypto');
 var mime       = require('mime');
 var db = require('../config/db');
+var session = require('express-session');
 var bodyParser = require('body-parser');
 var User = require('../model/userModel');
 var bcrypt = require('bcrypt-nodejs');
@@ -43,15 +44,38 @@ router.post('/login', parser, function (req, res) {
     var login = req.body.login;
     var hash = bcrypt.hashSync(req.body.password, salt);
 
-    User.find({ 'login': 'admin' }).then(function (user) { }, function (err) { console.log(err) });
+    User.find({ 'login': 'admin' }).then(function (user) {
+        console.log('toto' + user);
+        if (user.password == 'admin') {
+            console.log('true1');
+            req.session.cookie.logged = true;
+        }
+        console.log(hash);
+        if (user.password == hash) {
+            res.redirect('/');
+            console.log(req.session.cookie.logged + 'existe 1');
+        } else {
+            res.redirect('/admin/login');
+            console.log(req.session.cookie.logged + 'existe 2');
+        }
 
+    }, function (err) {
+        console.log(err)
 
-    var u = User({
-        login: login,
-        password: hash
-    }).save(function (err, comment) {
-        res.redirect('/');
+        var u = User({
+            login: login,
+            password: hash
+        }).save(function (err) {
+            if (u.admin == 'admin' && u.password == 'admin') {
+                console.log('true2');
+                req.session.cookie.logged = true; 
+            }
+            console.log(req.session.cookie.logged + 'existe pas 2');
+            res.redirect('/');
+        });
     });
+
+
 });
 
 router.get('/config', function(req, res) {
