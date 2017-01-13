@@ -7,6 +7,7 @@ var db = require('../config/db');
 var bodyParser = require('body-parser');
 var User = require('../model/userModel');
 var bcrypt = require('bcrypt-nodejs');
+var checkLogin = require('../middlewares/checkLogin');
 var movieModel = require('../model/movieModel');
 
 var storage    = multer.diskStorage({
@@ -40,9 +41,10 @@ var parser = bodyParser.urlencoded({ extended: false });
 
 router.post('/login', parser, function (req, res) {
     var login = req.body.login;
-
-    var salt = bcrypt.genSaltSync(10);
     var hash = bcrypt.hashSync(req.body.password, salt);
+
+    User.find({ 'login': 'admin' }).then(function (user) { }, function (err) { console.log(err) });
+
 
     var u = User({
         login: login,
@@ -56,7 +58,7 @@ router.get('/config', function(req, res) {
 });
 
 /**************** Add movie routing******/
-router.get('/addMovie', function(req, res) {
+router.get('/addMovie', checkLogin, function(req, res) {
     res.render('addMovie.html', {});
 });
 
