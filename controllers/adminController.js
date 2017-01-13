@@ -52,8 +52,6 @@ router.post('/addMovie', function (req, res) {
         var releaseDate = new Date(req.body.releaseDate);
         var summary     = req.body.summary;
 
-        console.log(releaseDate);
-        
         var movie = new movieModel({
             title: title,
             realisator: realisator,
