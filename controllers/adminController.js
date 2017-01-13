@@ -45,34 +45,31 @@ router.post('/login', parser, function (req, res) {
     var hash = bcrypt.hashSync(req.body.password, salt);
 
     User.find({ 'login': 'admin' }).then(function (user) {
-        console.log('toto' + user);
-        if (user.password == 'admin') {
-            console.log('true1');
-            req.session.cookie.logged = true;
-        }
-        console.log(hash);
-        if (user.password == hash) {
-            res.redirect('/');
-            console.log(req.session.cookie.logged + 'existe 1');
+        if (user.length == 0) {
+
+            User({
+                login: login,
+                password: bcrypt.hashSync('admin', salt)
+            }).save(function (err, u) {
+                if (login == 'admin' && bcrypt.compareSync(u.password, hash)) {
+                    req.session.cookie.logged = true;
+                    res.redirect('/');
+                } else {
+                    res.redirect('/admin/login');
+                }
+            });
+
         } else {
-            res.redirect('/admin/login');
-            console.log(req.session.cookie.logged + 'existe 2');
+            if (bcrypt.compareSync('admin', hash)) {
+                req.session.cookie.logged = true;
+                res.redirect('/');
+            } else {
+                res.redirect('/admin/login');
+            }
         }
 
     }, function (err) {
         console.log(err)
-
-        var u = User({
-            login: login,
-            password: hash
-        }).save(function (err) {
-            if (u.admin == 'admin' && u.password == 'admin') {
-                console.log('true2');
-                req.session.cookie.logged = true; 
-            }
-            console.log(req.session.cookie.logged + 'existe pas 2');
-            res.redirect('/');
-        });
     });
 
 
