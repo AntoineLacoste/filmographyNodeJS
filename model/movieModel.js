@@ -8,7 +8,7 @@ var movieSchema = new Schema({
     releaseDate: Date,
     addDate: { type: Date, default: Date.now },
     summary: String,
-    reviews: [{type: Schema.Types.ObjectId, ref: 'Review'}]
+    reviews: [{type: Schema.Types.ObjectId, ref: 'Review', default: []}]
 });
 
 module.exports = mongoose.model('Movie', movieSchema);
