@@ -9,7 +9,7 @@ var configSchema = new Schema({
 
 var configModel = mongoose.model('Config', configSchema);
 
-configModel.find({'parameter' : 'salt'}).then(
+configModel.find({}).then(
     function(config){
         if(config.length == 0){
             var configPerPage = configModel({
@@ -22,14 +22,16 @@ configModel.find({'parameter' : 'salt'}).then(
                 value: bcrypt.genSaltSync(10)
             });
 
-            configPerPage.save(function (err, config){
+            configPerPage.save(function (err, configPerPage){
                configSalt.save(function (err, configSalt) {
-                   global.salt = parseInt(configSalt.value);
+                   global.salt    = configSalt.value;
+                   global.perPage = parseInt(configPerPage.value);
                })
             });
         }
         else{
-            global.salt = config[0].value;
+            global.perPage = parseInt(config[0].value);
+            global.salt    = config[1].value;
         }
     },
     function (err) {

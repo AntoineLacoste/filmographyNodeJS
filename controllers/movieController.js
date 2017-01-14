@@ -7,8 +7,11 @@ var reviewModel = require('../model/reviewModel');
 
 var parser      = bodyParser.urlencoded({extended: false});
 
-router.get('/', function(req, res) {
-    movieModel.find({}).then(function (movies) {
+router.get('/', parser,  function(req, res) {
+    if(req.param('page')){
+        page = req.param('page');
+    }
+    movieModel.find({}).sort({releaseDate: -1}).limit(perPage).skip((page - 1) * perPage).then(function (movies) {
         res.render('movies.html', { movies: movies});
     },function (err) {
         console.log(err);
@@ -16,7 +19,7 @@ router.get('/', function(req, res) {
 });
 
 router.get('/popular', function(req, res) {
-    movieModel.find({}).sort({averageRate: -1}).populate('reviews').then(function (movies) {
+    movieModel.find({}).populate('reviews').then(function (movies) {
         for(var i = 0; i < movies.length; i++){
             var sum = 0;
             for(var j = 0; j < movies[i].reviews; j++){

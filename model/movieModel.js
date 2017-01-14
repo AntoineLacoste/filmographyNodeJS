@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var dateformat = require('dateformat');
 var Schema = mongoose.Schema;
 
 var movieSchema = new Schema({

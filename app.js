@@ -4,7 +4,7 @@ var bcrypt      = require('bcrypt-nodejs');
 var app         = express();
 var configModel = require('./model/configModel');
 
-global.salt = bcrypt.genSaltSync(10);
+global.page = 1;
 global.sess = {};
 
 app.engine('.html', require('ejs').__express);

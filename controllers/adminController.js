@@ -10,6 +10,7 @@ var User       = require('../model/userModel');
 var bcrypt     = require('bcrypt-nodejs');
 var checkLogin = require('../middlewares/checkLogin');
 var movieModel = require('../model/movieModel');
+var dateformat = require('dateformat');
 
 var storage    = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -42,6 +43,7 @@ var parser = bodyParser.urlencoded({ extended: false });
 
 router.post('/login', parser, function (req, res) {
     sess = req.session;
+    console.log(salt);
     var login = req.body.login;
     var hash = bcrypt.hashSync(req.body.password, salt);
 
@@ -85,12 +87,11 @@ router.get('/config', function(req, res) {
 
 /**************** Add movie routing******/
 //TODO add middleware
-router.get('/addMovie', function(req, res) {//, checkLogin, function(req, res) {
-    console.log(sess);
+router.get('/addMovie', checkLogin, function(req, res) {
     res.render('addMovie.html', {});
 });
 
-router.post('/addMovie', function(req, res) {//, checkLogin, function (req, res) {
+router.post('/addMovie', checkLogin, function(req, res) {//, checkLogin, function (req, res) {
     upload(req, res, function (err) {
         console.log(req.session);
         if(err){
@@ -100,6 +101,7 @@ router.post('/addMovie', function(req, res) {//, checkLogin, function (req, res)
         var title       = req.body.title;
         var realisator  = req.body.realisator;
         var releaseDate = new Date(req.body.releaseDate);
+        releaseDate     = dateformat(releaseDate, 'dd/mm/yyyy');
         var summary     = req.body.summary;
 
         var movie = new movieModel({

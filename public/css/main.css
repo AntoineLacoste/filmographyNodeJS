@@ -1,3 +1,8 @@
 body {
   padding-top: 70px;
 }
+
+.previousButton{
+  float: left;
+  margin-right: 5px;
+}

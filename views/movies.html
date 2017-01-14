@@ -29,6 +29,12 @@
     </div>
   </div>
   <% }) %>
+  <div>
+    <% if(page > 1) {%>
+      <p><a href="/?page=<%= parseInt(page) - 1 %>" class="btn btn-primary previousButton" role="button">Previous</a></p>
+    <% } %>
+    <p><a href="/?page=<%= parseInt(page) + 1 %>" class="btn btn-primary" role="button">Next</a></p>
+  </div>
 </div>
 
 </body>
