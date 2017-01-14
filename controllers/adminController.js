@@ -43,7 +43,7 @@ var parser = bodyParser.urlencoded({ extended: false });
 
 router.post('/login', parser, function (req, res) {
     sess = req.session;
-    console.log(salt);
+    console.log(sess);
     var login = req.body.login;
     var hash = bcrypt.hashSync(req.body.password, salt);
 
@@ -55,7 +55,7 @@ router.post('/login', parser, function (req, res) {
                 password: bcrypt.hashSync('admin', salt)
             }).save(function (err, u) {
                 if (login == 'admin' && bcrypt.compareSync(u.password, hash)) {
-                    req.session.cookie.logged = true;
+                    sess.logged = true;
                     res.redirect('/');
                 } else {
                     res.redirect('/admin/login');
@@ -64,7 +64,7 @@ router.post('/login', parser, function (req, res) {
 
         } else {
             if (bcrypt.compareSync('admin', hash)) {
-                req.session.cookie.logged = true;
+                sess.logged = true;
                 res.redirect('/');
             } else {
                 res.redirect('/admin/login');
