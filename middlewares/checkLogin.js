@@ -1,11 +1,9 @@
 var checkLogin = function (req, res, next) {
-    console.log(req.session);
-    if (req.session.cookie.logged) {
-        
+    console.log(sess);
+    if (sess.logged) {
         next();
     }
-
     res.redirect('/admin/login');
-}
+};
 
 module.exports = checkLogin;

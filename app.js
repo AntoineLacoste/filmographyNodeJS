@@ -1,18 +1,17 @@
-var express = require('express');
-var session = require('express-session');
-var bcrypt = require('bcrypt-nodejs');
-var app        = express();
+var express     = require('express');
+var session     = require('express-session');
+var bcrypt      = require('bcrypt-nodejs');
+var app         = express();
+var configModel = require('./model/configModel');
 
 global.salt = bcrypt.genSaltSync(10);
+global.sess = {};
 
 app.engine('.html', require('ejs').__express);
 
 app.set('view engine', 'html');
 
-app.use(session({
-    secret: 'admin',
-    cookie: {logged: false }
-}));
+app.use(session({secret: 'movieApp'}));
 
 app.use('/public', express.static(__dirname + '/public'));
 
