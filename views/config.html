@@ -1,10 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="/public/css/bootstrap.min.css" />
     <link rel="stylesheet" href="/public/css/main.css" />
-    <link rel="stylesheet" href="/public/css/bootstrap-datepicker.css" />
     <title>Movies app</title>
 </head>
 <body>
@@ -20,15 +19,15 @@
     <% } %>
     <form method="post">
         <div class="form-group">
-            <label for="login">Login</label>
-            <input type="text" class="form-control" id="login" name="login" placeholder="Login">
+            <label for="salt">Clef de cryptage des Mot de passe</label>
+            <input type="text" class="form-control" id="salt" name="salt" placeholder="<%= salt %>">
         </div>
         <div class="form-group">
-            <label for="password">Password</label>
-            <input type="text" class="form-control" id="password" name="password" placeholder="Password">
+            <label for="perPage">Nombre de film par page</label>
+            <input type="text" class="form-control" id="perPage" name="perPage" placeholder="<%= perPage %>">
         </div>
 
-        <button type="submit" class="btn btn-primary">Connexion</button>
+        <button type="submit" class="btn btn-primary">Valid</button>
     </form>
 </div>
 
