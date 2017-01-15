@@ -11,17 +11,16 @@ router.get('/', checkLogin, function (req, res) {
 });
 
 router.post('/', parser, function (req, res) {
-    var newPerPage = new Config({
-        parameter: 'perPage',
-        value: req.body.perPage
-    });
+
+    newPerPage = req.body.perPage
 
     Config.find({ 'parameter': 'perPage' }).then(function (configPerPage) {
-        configSalt[0].value = newPerPage
+        configPerPage[0].value = newPerPage
+        configPerPage[0].save(function (err, config) {
+            res.redirect('/');
+        });
     });
 
-    newPerPage.save();
-    res.redirect('/');
 });
 
 module.exports = router;
