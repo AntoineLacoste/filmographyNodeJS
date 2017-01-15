@@ -3,6 +3,7 @@ var session     = require('express-session');
 var bcrypt      = require('bcrypt-nodejs');
 var app         = express();
 var configModel = require('./model/configModel');
+var userModel   = require('./model/userModel');
 
 global.page = 1;
 global.sess = {};

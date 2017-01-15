@@ -48,28 +48,12 @@ router.post('/login', parser, function (req, res) {
     var hash = bcrypt.hashSync(req.body.password, salt);
 
     User.find({ 'login': 'admin' }).then(function (user) {
-        if (user.length == 0) {
-
-            User({
-                login: login,
-                password: bcrypt.hashSync('admin', salt)
-            }).save(function (err, u) {
-                if (login == 'admin' && bcrypt.compareSync(u.password, hash)) {
-                    sess.logged = true;
-                    res.redirect('/');
-                } else {
-                    res.redirect('/admin/login');
-                }
-            });
-
-        } else {
             if (bcrypt.compareSync('admin', hash)) {
                 sess.logged = true;
                 res.redirect('/');
             } else {
                 res.redirect('/admin/login');
             }
-        }
 
     }, function (err) {
         console.log(err)
