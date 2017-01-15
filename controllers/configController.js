@@ -14,9 +14,9 @@ router.post('/', parser, function (req, res) {
 
     newPerPage = req.body.perPage
 
-    Config.find({ 'parameter': 'perPage' }).then(function (configPerPage) {
-        configPerPage[0].value = newPerPage
-        configPerPage[0].save(function (err, config) {
+    Config.find({ 'parameter': 'perPage' }).then(function (configSalt) {
+        configSalt[0].value = newPerPage
+        newPerPage.save(function (err, config) {
             res.redirect('/');
         });
     });

@@ -52,7 +52,7 @@ router.post('/login', parser, function (req, res) {
                 sess.logged = true;
                 res.redirect('/');
             } else {
-                res.redirect('/admin/login');
+                res.render('login.html', {error: 'Wrong login/password'});
             }
 
     }, function (err) {
@@ -71,27 +71,35 @@ router.get('/addMovie', checkLogin, function(req, res) {
 
 router.post('/addMovie', checkLogin, function(req, res) {//, checkLogin, function (req, res) {
     upload(req, res, function (err) {
-        console.log(req.session);
         if(err){
             return res.render('addMovie.html', {error: err});
         }
 
         var title       = req.body.title;
         var realisator  = req.body.realisator;
-        var releaseDate = new Date(req.body.releaseDate);
-        releaseDate     = dateformat(releaseDate, 'dd/mm/yyyy');
         var summary     = req.body.summary;
+        var path = '';
 
+        try {
+            var releaseDate = new Date(req.body.releaseDate);
+            releaseDate     = dateformat(releaseDate, 'dd/mm/yyyy');
+        }
+        catch(e){
+            return res.render('addMovie.html', {error: 'Bad date format, usage : dd/mm/yyyy'});
+        }
+
+        if(req.file){
+            path = req.file.path;
+        }
         var movie = new movieModel({
             title: title,
             realisator: realisator,
-            poster: req.file.path,
+            poster: path,
             releaseDate: releaseDate,
             summary: summary,
         });
 
-        console.log(movie);
-        movie.save(function (err,post) {
+        movie.save(function (err, movie) {
             res.redirect('/');
         });
 
