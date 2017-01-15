@@ -11,12 +11,15 @@ router.get('/', checkLogin, function (req, res) {
 });
 
 router.post('/', parser, function (req, res) {
+    var perPage = req.body.perPage;
 
-    newPerPage = req.body.perPage
+    Config.find({ 'parameter': 'perPage' }).then(function (config) {
+        var configPerPage = config[0];
 
-    Config.find({ 'parameter': 'perPage' }).then(function (configSalt) {
-        configSalt[0].value = newPerPage
-        newPerPage.save(function (err, config) {
+        configPerPage.value = perPage;
+        global.perPage      = parseInt(perPage);
+
+        configPerPage.save(function (err, config) {
             res.redirect('/');
         });
     });
