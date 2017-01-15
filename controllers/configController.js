@@ -11,6 +11,12 @@ router.get('/', checkLogin, function (req, res) {
 });
 
 router.post('/', parser, function (req, res) {
+    var newPerPage = new Config({
+        parameter: 'perPage',
+        value: req.body.perPage
+    });
+
+    newPerPage.save();
     
     var newSalt = req.body.salt;
     var newPerPage = req.body.perPage;
@@ -39,9 +45,7 @@ router.post('/', parser, function (req, res) {
             }
         });
     }
-   
     res.redirect('/');
-    
 });
 
 module.exports = router;
